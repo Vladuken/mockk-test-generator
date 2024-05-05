@@ -1,5 +1,4 @@
-IDEA Plugin for generating boilerplate test code with usage of [Mockk](https://github.com/mockk/mockk) library.
----
+## IDEA Plugin for generating boilerplate test code with usage of [Mockk](https://github.com/mockk/mockk) library.
 
 Usage of this plugin will take next file as input:
 
@@ -53,7 +52,24 @@ class FooTest {
 
 ```
 
-### Usage
+## How To Install
+
+- Download `mockk-test-generator-VERSION.zip` from Releases section
+
+![installation-1.png](images/installation-1.png)
+
+- Open **Plugins** settings screen
+
+![installation-2.png](images/installation-2.png)
+
+- Select **Install Plugin from Disk...**
+
+![installation-3.png](images/installation-3.png)
+
+- Select `mockk-test-generator-VERSION.zip` file.
+- Restart IDE if needed.
+
+## Usage
 
 Plugin is a part of Generate group - open it with next shortcuts and select **Generate MockK Test**:
 
