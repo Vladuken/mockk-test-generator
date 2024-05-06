@@ -10,6 +10,17 @@ private const val KOTLIN_LAZY_FQN = "kotlin.Lazy"
 private const val TEST_SCOPE_IMPORT = "kotlinx.coroutines.test.TestScope"
 private const val MOCKK_SCOPE_IMPORT = "io.mockk.impl.annotations.MockK"
 
+private val primitivesMapWithDefaultValues = mapOf(
+    "kotlin.Int" to "0",
+    "kotlin.Long" to "0L",
+    "kotlin.Double" to "0.0",
+    "kotlin.Float" to "0.0F",
+    "kotlin.String" to "\"\"",
+    "kotlin.Boolean" to "false",
+    "kotlin.Byte" to "0",
+    "kotlin.Short" to "0",
+)
+
 /**
  * Create [GeneratorInputModel] from provided [DomainClassInfo] and additional parameters
  */
@@ -44,7 +55,6 @@ private fun DomainClassInfo.toImports(): Set<String> {
     }
 }
 
-
 /**
  * Return all info that will be used for @Mockk parameters generation.
  */
@@ -52,13 +62,15 @@ private fun DomainClassInfo.toMockkConstructorParameters(): List<GeneratorConstr
     return buildList {
         parameters.forEach {
             val parametersModel = GeneratorConstructorParameters(
-                name = it.parameterName,
-                type = when (it.parameterTypeFqn) {
+                isPrimitive = it.parameterTypeFqn in primitivesMapWithDefaultValues.keys,
+                methodDefaultParameterName = primitivesMapWithDefaultValues[it.parameterTypeFqn] ?: it.parameterName,
+                methodParamName = it.parameterName,
+                shortType = when (it.parameterTypeFqn) {
                     KOTLIN_LAZY_FQN -> it.nestedGenericTypeName
                     DAGGER_LAZY_FQN -> it.nestedGenericTypeName
                     else -> it.rawTypeString
                 },
-                wrappedNameIfNeeded = when (it.parameterTypeFqn) {
+                methodParamWrappedNameIfNeeded = when (it.parameterTypeFqn) {
                     KOTLIN_LAZY_FQN -> "lazyOf(${it.parameterName})"
                     DAGGER_LAZY_FQN -> "{${it.parameterName}}"
                     else -> it.parameterName

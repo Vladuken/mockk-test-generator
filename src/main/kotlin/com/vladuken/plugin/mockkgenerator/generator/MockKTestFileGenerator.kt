@@ -1,5 +1,6 @@
 package com.vladuken.plugin.mockkgenerator.generator
 
+import com.vladuken.plugin.mockkgenerator.model.GeneratorConstructorParameters
 import com.vladuken.plugin.mockkgenerator.model.GeneratorInputModel
 
 /**
@@ -21,9 +22,11 @@ class MockKTestFileGenerator(
             appendLine(generatorInputModel.className.asTestClassDeclaration())
             appendLine()
             // create @Mockk fields
-            generatorInputModel.mockFields.forEach {
-                appendLine(it.name.asMockkTestField(it.type))
-            }
+            generatorInputModel.mockFields
+                .filterNot { it.isPrimitive }
+                .forEach {
+                    appendLine(it.methodParamName.asMockkTestField(it.shortType))
+                }
             // create prepareForMethod
             createPrepareForMethod(generatorInputModel)
 
@@ -55,18 +58,13 @@ class MockKTestFileGenerator(
     ) {
         val classConstructorName = generatorInputModel.className
 
-        val thisLabel = if (generatorInputModel.useTestScope) {
-            "this@${generatorInputModel.className}Test"
-        } else {
-            "this"
-        }
-
         val optionalTestScopeReceiver = "TestScope.".takeIf { generatorInputModel.useTestScope } ?: ""
-        val parametersOfMethods = generatorInputModel.mockFields.joinToString("\n") {
-            it.name + " : " + it.type + " = $thisLabel." + it.name + ","
+        val parametersOfMethods = generatorInputModel.mockFields.joinToString("\n") { field ->
+            val thisLabel = prepareThisLabelIfNeeded(field)
+            field.methodParamName + " : " + field.shortType + " = $thisLabel" + field.methodDefaultParameterName + ","
         }
-        val parametersOfConstructor = generatorInputModel.mockFields.joinToString("\n") {
-            it.name + " = " + it.wrappedNameIfNeeded + ","
+        val parametersOfConstructor = generatorInputModel.mockFields.joinToString("\n") { field ->
+            field.methodParamName + " = " + field.methodParamWrappedNameIfNeeded + ","
         }
         val functionMethodLine = """
         private fun ${optionalTestScopeReceiver}prepare${classConstructorName}(
@@ -80,7 +78,22 @@ class MockKTestFileGenerator(
         appendLine(functionMethodLine)
     }
 
+
+    private fun prepareThisLabelIfNeeded(
+        generatorConstructorParameters: GeneratorConstructorParameters,
+    ): String {
+        val thisLabel = if (generatorInputModel.useTestScope) {
+            "this@${generatorInputModel.className}Test."
+        } else {
+            "this."
+        }
+        val finalThisLabel = thisLabel.takeIf { generatorConstructorParameters.isPrimitive.not() } ?: ""
+
+        return finalThisLabel
+    }
+
 }
+
 
 
 
