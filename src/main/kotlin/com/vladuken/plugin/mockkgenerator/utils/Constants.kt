@@ -11,4 +11,8 @@ object TextConstants {
 
     const val settings_dialog_checkbox_relax = "Should relax @Mockk-ed fields"
 
+    const val settings_dialog_checkbox_before_method = "Should generate @Before method"
+    const val settings_dialog_checkbox_after_method = "Should generate @After method"
+
+
 }

@@ -19,6 +19,8 @@ class MockkGeneratorSettingsDialog(
     private var _shouldUseTestScope: Boolean = false,
     private var _relaxUnitFunByDefault: Boolean = false,
     private var _relaxedByDefault: Boolean = false,
+    private var _generateBefore: Boolean = true,
+    private var _generateAfter: Boolean = false,
 ) : DialogWrapper(true) {
 
     init {
@@ -32,6 +34,9 @@ class MockkGeneratorSettingsDialog(
 
     val relaxedByDefault: Boolean get() = _relaxedByDefault
 
+    val generateBefore: Boolean get() = _generateBefore
+    val generateAfter: Boolean get() = _generateAfter
+
     override fun createCenterPanel(): JComponent {
         val dialogPanel = JPanel(
             /* layout = */ ListLayout.vertical(
@@ -43,27 +48,63 @@ class MockkGeneratorSettingsDialog(
 
 
         // TestScope Ext
-        val testScopeExtCheckBox =
-            JCheckBox(TextConstants.settings_dialog_checkbox_test_scope_message, _shouldUseTestScope)
-        testScopeExtCheckBox.addChangeListener { _shouldUseTestScope = testScopeExtCheckBox.isSelected }
-        dialogPanel.add(testScopeExtCheckBox)
+        dialogPanel.add(
+            createCheckBox(
+                message = TextConstants.settings_dialog_checkbox_test_scope_message,
+                defaultValue = _shouldUseTestScope,
+                onChange = { isSelected -> _shouldUseTestScope = isSelected }
+            )
+        )
 
         dialogPanel.add(JSeparator())
 
         // Relax Unit Fun
-        val relaxUnitFunCheckBox =
-            JCheckBox(TextConstants.settings_dialog_checkbox_relax_unit_fun, _relaxUnitFunByDefault)
-        relaxUnitFunCheckBox.addChangeListener { _relaxUnitFunByDefault = relaxUnitFunCheckBox.isSelected }
-        dialogPanel.add(relaxUnitFunCheckBox)
+        dialogPanel.add(
+            createCheckBox(
+                message = TextConstants.settings_dialog_checkbox_relax_unit_fun,
+                defaultValue = _relaxUnitFunByDefault,
+                onChange = { isSelected -> _relaxUnitFunByDefault = isSelected }
+            )
+        )
 
         // Relax All
-        val relaxCheckBox = JCheckBox(TextConstants.settings_dialog_checkbox_relax, _relaxUnitFunByDefault)
-        relaxCheckBox.addChangeListener { _relaxedByDefault = relaxCheckBox.isSelected }
-        dialogPanel.add(relaxCheckBox)
+        dialogPanel.add(
+            createCheckBox(
+                message = TextConstants.settings_dialog_checkbox_relax,
+                defaultValue = _relaxUnitFunByDefault,
+                onChange = { isSelected -> _relaxUnitFunByDefault = isSelected }
+            )
+        )
 
+        dialogPanel.add(JSeparator())
+        dialogPanel.add(
+            createCheckBox(
+                message = TextConstants.settings_dialog_checkbox_before_method,
+                defaultValue = _generateBefore,
+                onChange = { isSelected -> _generateBefore = isSelected }
+            )
+        )
+
+        dialogPanel.add(
+            createCheckBox(
+                message = TextConstants.settings_dialog_checkbox_after_method,
+                defaultValue = _generateAfter,
+                onChange = { isSelected -> _generateAfter = isSelected }
+            )
+        )
         dialogPanel.add(JSeparator())
 
 
         return dialogPanel
+    }
+
+    private fun createCheckBox(
+        message: String,
+        defaultValue: Boolean,
+        onChange: (Boolean) -> Unit,
+    ): JCheckBox {
+        val createdCheckBox = JCheckBox(message, defaultValue)
+        createdCheckBox.addChangeListener { onChange(createdCheckBox.isSelected) }
+        return createdCheckBox
     }
 }

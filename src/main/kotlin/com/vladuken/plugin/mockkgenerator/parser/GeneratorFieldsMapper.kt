@@ -9,6 +9,11 @@ private const val KOTLIN_LAZY_FQN = "kotlin.Lazy"
 
 private const val TEST_SCOPE_IMPORT = "kotlinx.coroutines.test.TestScope"
 private const val MOCKK_SCOPE_IMPORT = "io.mockk.impl.annotations.MockK"
+private const val MOCKK_ANNOTATIONS_IMPORT = "io.mockk.MockKAnnotations"
+private const val MOCKK_UNMOCKK_ALL_IMPORT = "io.mockk.unmockkAll"
+
+private const val JUNIT_BEFORE_IMPORT = "org.junit.Before"
+private const val JUNIT_AFTER_IMPORT = "org.junit.After"
 
 private val primitivesMapWithDefaultValues = mapOf(
     "kotlin.Int" to "0",
@@ -26,10 +31,20 @@ private val primitivesMapWithDefaultValues = mapOf(
  */
 fun DomainClassInfo.mapToGeneratorModel(
     generateOverTestScope: Boolean,
+    generateBefore: Boolean,
+    generateAfter: Boolean,
 ): GeneratorInputModel {
     val optionalImports = setOfNotNull(
+        // TestScope dependency
         TEST_SCOPE_IMPORT.takeIf { generateOverTestScope },
+        // @Mockk dependency
         MOCKK_SCOPE_IMPORT.takeIf { parameters.isNotEmpty() },
+        // @Before
+        JUNIT_BEFORE_IMPORT.takeIf { generateBefore },
+        MOCKK_ANNOTATIONS_IMPORT.takeIf { generateBefore },
+        // @After
+        JUNIT_AFTER_IMPORT.takeIf { generateAfter },
+        MOCKK_UNMOCKK_ALL_IMPORT.takeIf { generateAfter },
     )
     val imports = toImports() + optionalImports
     val mockFields = toMockkConstructorParameters()

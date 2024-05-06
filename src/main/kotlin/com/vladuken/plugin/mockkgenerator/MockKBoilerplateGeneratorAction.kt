@@ -59,6 +59,8 @@ class MockKBoilerplateGeneratorAction : AnAction() {
         val shouldBeGeneratedOverTestScope = pluginSettingsDialog.shouldUseTestScope
         val mockKRelaxUnitFun = pluginSettingsDialog.relaxUnitFunByDefault
         val mockKRelaxAll = pluginSettingsDialog.relaxedByDefault
+        val generateBefore = pluginSettingsDialog.generateBefore
+        val generateAfter = pluginSettingsDialog.generateAfter
 
         // Select directory of where to add generated file
         val selectedDirectory = CreateTestUtils.selectTargetDirectory(
@@ -73,11 +75,15 @@ class MockKBoilerplateGeneratorAction : AnAction() {
         // Generate boilerplate file body string
         val generatorInput = domainClassInfo.mapToGeneratorModel(
             generateOverTestScope = shouldBeGeneratedOverTestScope,
+            generateBefore = generateBefore,
+            generateAfter = generateAfter,
         )
         val generatedTestFileBody = MockKTestFileGenerator(
             generatorInputModel = generatorInput,
             mockKRelaxUnitFun = mockKRelaxUnitFun,
             mockKRelaxAll = mockKRelaxAll,
+            generateBefore = generateBefore,
+            generateAfter = generateAfter,
         ).buildFileStringRepresentation()
 
         // Run Write action with creation of file
