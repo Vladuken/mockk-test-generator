@@ -5,7 +5,10 @@ import com.vladuken.plugin.mockkgenerator.model.DomainConstructorParameters
 import org.jetbrains.kotlin.idea.base.psi.kotlinFqName
 import org.jetbrains.kotlin.idea.references.mainReference
 import org.jetbrains.kotlin.nj2k.types.typeFqName
-import org.jetbrains.kotlin.psi.*
+import org.jetbrains.kotlin.psi.KtClass
+import org.jetbrains.kotlin.psi.KtFunctionType
+import org.jetbrains.kotlin.psi.KtTypeReference
+import org.jetbrains.kotlin.psi.KtUserType
 
 
 /**
@@ -13,7 +16,7 @@ import org.jetbrains.kotlin.psi.*
  */
 fun KtClass.parseToDomainClassInfo(): DomainClassInfo {
     return DomainClassInfo(
-        packageName = (containingFile as KtFile).packageFqName.toString(),
+        packageName = containingKtFile.packageFqName.toString(),
         className = name.orEmpty(),
         fqClassName = kotlinFqName.toString(),
         parameters = parseToDomainConstructorParameters(),

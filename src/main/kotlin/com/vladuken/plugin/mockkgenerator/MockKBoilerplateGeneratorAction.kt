@@ -26,6 +26,7 @@ import com.vladuken.plugin.mockkgenerator.utils.TextConstants
 import org.jetbrains.kotlin.idea.KotlinLanguage
 import org.jetbrains.kotlin.idea.base.util.module
 import org.jetbrains.kotlin.psi.KtClass
+import org.jetbrains.kotlin.psi.KtFile
 
 /**
  * Will generate test file with boilerplate code for @MockK library.
@@ -60,7 +61,7 @@ class MockKBoilerplateGeneratorAction : AnAction() {
 
         // Select directory of where to add generated file
         val selectedDirectory = CreateTestUtils.selectTargetDirectory(
-            /* packageName = */ "",
+            /* packageName = */ ktClass.containingKtFile.packageFqName.toString(),
             /* project = */ project,
             /* targetModule = */ ktClass.module,
         ) ?: return
