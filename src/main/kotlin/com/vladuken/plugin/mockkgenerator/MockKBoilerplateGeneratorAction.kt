@@ -26,7 +26,6 @@ import com.vladuken.plugin.mockkgenerator.utils.TextConstants
 import org.jetbrains.kotlin.idea.KotlinLanguage
 import org.jetbrains.kotlin.idea.base.util.module
 import org.jetbrains.kotlin.psi.KtClass
-import org.jetbrains.kotlin.psi.KtFile
 
 /**
  * Will generate test file with boilerplate code for @MockK library.
@@ -58,6 +57,8 @@ class MockKBoilerplateGeneratorAction : AnAction() {
         if (pluginSettingsDialog.showAndGet().not()) return
 
         val shouldBeGeneratedOverTestScope = pluginSettingsDialog.shouldUseTestScope
+        val mockKRelaxUnitFun = pluginSettingsDialog.relaxUnitFunByDefault
+        val mockKRelaxAll = pluginSettingsDialog.relaxedByDefault
 
         // Select directory of where to add generated file
         val selectedDirectory = CreateTestUtils.selectTargetDirectory(
@@ -73,7 +74,11 @@ class MockKBoilerplateGeneratorAction : AnAction() {
         val generatorInput = domainClassInfo.mapToGeneratorModel(
             generateOverTestScope = shouldBeGeneratedOverTestScope,
         )
-        val generatedTestFileBody = MockKTestFileGenerator(generatorInput).buildFileStringRepresentation()
+        val generatedTestFileBody = MockKTestFileGenerator(
+            generatorInputModel = generatorInput,
+            mockKRelaxUnitFun = mockKRelaxUnitFun,
+            mockKRelaxAll = mockKRelaxAll,
+        ).buildFileStringRepresentation()
 
         // Run Write action with creation of file
         ApplicationManager.getApplication().runWriteAction {

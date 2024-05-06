@@ -8,6 +8,8 @@ import com.vladuken.plugin.mockkgenerator.model.GeneratorInputModel
  */
 class MockKTestFileGenerator(
     private val generatorInputModel: GeneratorInputModel,
+    private val mockKRelaxUnitFun: Boolean,
+    private val mockKRelaxAll: Boolean,
 ) {
 
     fun buildFileStringRepresentation(): String {
@@ -48,7 +50,19 @@ class MockKTestFileGenerator(
     }
 
     private fun String.asMockkTestField(type: String): String {
-        return "@MockK\n" +
+        val mockkAnnotation = when {
+            mockKRelaxAll && mockKRelaxUnitFun -> """
+                @MockK(
+                    relaxed = true,
+                    relaxUnitFun = true,
+                )
+            """.trimIndent()
+
+            mockKRelaxAll -> "@MockK(relaxed = true)"
+            mockKRelaxUnitFun -> "@MockK(relaxUnitFun = true)"
+            else -> "@MockK"
+        }
+        return "$mockkAnnotation\n" +
                 "lateinit var $this : $type\n"
     }
 
