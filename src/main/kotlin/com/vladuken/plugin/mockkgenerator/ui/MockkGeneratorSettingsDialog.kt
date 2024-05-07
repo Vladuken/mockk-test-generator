@@ -71,8 +71,8 @@ class MockkGeneratorSettingsDialog(
         dialogPanel.add(
             createCheckBox(
                 message = TextConstants.settings_dialog_checkbox_relax,
-                defaultValue = _relaxUnitFunByDefault,
-                onChange = { isSelected -> _relaxUnitFunByDefault = isSelected }
+                defaultValue = _relaxedByDefault,
+                onChange = { isSelected -> _relaxedByDefault = isSelected }
             )
         )
 
