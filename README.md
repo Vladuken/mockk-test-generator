@@ -1,6 +1,13 @@
-## IDEA Plugin for generating boilerplate test code with usage of [Mockk](https://github.com/mockk/mockk) library.
+# IDEA Plugin that generates boilerplate code for [Mockk](https://github.com/mockk/mockk) tests.
 
-Usage of this plugin will take next file as input:
+---
+
+## Description:
+
+---
+
+<details>
+<summary>Plugin take class as an input:</summary>
 
 ```kotlin
 package com.test.project
@@ -13,7 +20,10 @@ class Foo(
 )
 ```
 
-And generate test class with some boilerplate code as output:
+</details>
+
+<details>
+<summary>And generates test class with some boilerplate code as output:</summary>
 
 ```kotlin
 package com.test.project
@@ -52,7 +62,35 @@ class FooTest {
 
 ```
 
+</details>
+
+## How To Use
+
+---
+
+Plugin is a part of **Generate** group - open it with next shortcuts and select **Generate MockK Test**:
+
+MacOS: <kbd>Cmd</kbd> + <kbd>N</kbd>
+
+Windows: <kbd>Alt</kbd> + <kbd>Insert</kbd>
+
+![mockk-generate.png](images/mockk-generate.png)
+
+You will see next dialog:
+
+![usage-1.png](images/usage-1.png)
+
+|   | Option                                                    | Description                                                        |
+|---|-----------------------------------------------------------|--------------------------------------------------------------------|
+| 1 | Should generate prepareMethod() as Extension of TestScope | Create method as Ext of TestScope                                  |
+| 2 | Should relaxUnitFun @Mockk-ed fields                      | Will add relaxUnitFun to every @Mockk field                        |
+| 3 | Should relax @Mockk-ed fields                             | Will add relax to every @Mockk field                               |
+| 4 | Should generate @Before method                            | Will generate @Before method and mock annotated with @MockK fields |
+| 5 | Should generate @After method                             | Will generate @After method and un-mock everything                 |
+
 ## How To Install
+
+---
 
 - Download `mockk-test-generator-VERSION.zip` from Releases section
 
@@ -68,15 +106,3 @@ class FooTest {
 
 - Select `mockk-test-generator-VERSION.zip` file.
 - Restart IDE if needed.
-
-## Usage
-
-Plugin is a part of Generate group - open it with next shortcuts and select **Generate MockK Test**:
-
-MacOS: <kbd>Cmd</kbd> + <kbd>N</kbd>
-
-Windows: <kbd>Alt</kbd> + <kbd>Insert</kbd>
-
-![mockk-generate.png](images/mockk-generate.png)
-
-
