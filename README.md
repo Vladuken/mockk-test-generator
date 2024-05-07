@@ -1,10 +1,6 @@
 # IDEA Plugin that generates boilerplate code for [Mockk](https://github.com/mockk/mockk) tests.
 
----
-
 ## Description:
-
----
 
 <details>
 <summary>Plugin take class as an input:</summary>
@@ -66,8 +62,6 @@ class FooTest {
 
 ## How To Use
 
----
-
 Plugin is a part of **Generate** group - open it with next shortcuts and select **Generate MockK Test**:
 
 MacOS: <kbd>Cmd</kbd> + <kbd>N</kbd>
@@ -89,8 +83,6 @@ You will see next dialog:
 | 5 | Should generate @After method                             | Will generate @After method and un-mock everything                 |
 
 ## How To Install
-
----
 
 - Download `mockk-test-generator-VERSION.zip` from Releases section
 
