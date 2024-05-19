@@ -22,6 +22,22 @@
     <depends>org.jetbrains.kotlin</depends>
 
 
+    <extensions defaultExtensionNs="com.intellij">
+        <defaultLiveTemplates file="/liveTemplates/MockKLiveTemplates.xml"/>
+
+        <liveTemplateContext contextId="TEST_KOTLIN"
+                             implementation="com.vladuken.plugin.mockkgenerator.template.context.KotlinTestTemplateContextType$Generic"/>
+        <liveTemplateContext contextId="TEST_KOTLIN_TOPLEVEL"
+                             baseContextId="KOTLIN"
+                             implementation="com.vladuken.plugin.mockkgenerator.template.context.KotlinTestTemplateContextType$TopLevel"/>
+        <liveTemplateContext contextId="TEST_KOTLIN_CLASS"
+                             baseContextId="KOTLIN"
+                             implementation="com.vladuken.plugin.mockkgenerator.template.context.KotlinTestTemplateContextType$Class"/>
+        <liveTemplateContext contextId="TEST_KOTLIN_OBJECT_DECLARATION"
+                             baseContextId="KOTLIN"
+                             implementation="com.vladuken.plugin.mockkgenerator.template.context.KotlinTestTemplateContextType$ObjectDeclaration"/>
+
+    </extensions>
     <actions>
         <group
                 id="MockKGeneratorGroup"
