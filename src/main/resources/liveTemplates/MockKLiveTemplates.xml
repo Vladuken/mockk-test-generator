@@ -1,0 +1,63 @@
+<templateSet group="MockK Generator Plugin Test Cases">
+    <template name="ft"
+              value="@org.junit.Test&#10;fun `test $testName$`() {&#10;    // given&#10;    // when&#10;    // then&#10;}"
+              description="Create fun `test`() method" toReformat="false" toShortenFQNames="true">
+        <variable name="testName" expression="" defaultValue="" alwaysStopAt="true"/>
+        <context>
+            <option name="TEST_KOTLIN_CLASS" value="true"/>
+        </context>
+    </template>
+    <template name="fb" value="@org.junit.Before&#10;fun before() {&#10;    io.mockk.MockKAnnotations.init(this)&#10;}"
+              description="Create fun before()" toReformat="false" toShortenFQNames="true">
+        <context>
+            <option name="TEST_KOTLIN_CLASS" value="true"/>
+        </context>
+    </template>
+    <template name="fa" value="@org.junit.After&#10;fun after() {&#10;}" description="Create fun after()"
+              toReformat="false" toShortenFQNames="true">
+        <context>
+            <option name="TEST_KOTLIN_CLASS" value="true"/>
+        </context>
+    </template>
+    <template name="gi" value="// given" description="adds // given" toReformat="true" toShortenFQNames="true">
+        <context>
+            <option name="TEST_KOTLIN" value="true"/>
+            <option name="TEST_KOTLIN_CLASS" value="false"/>
+            <option name="TEST_KOTLIN_OBJECT_DECLARATION" value="false"/>
+            <option name="TEST_KOTLIN_TOPLEVEL" value="false"/>
+        </context>
+    </template>
+    <template name="wh" value="// when" description="adds // when" toReformat="true" toShortenFQNames="true">
+        <context>
+            <option name="TEST_KOTLIN" value="true"/>
+            <option name="TEST_KOTLIN_CLASS" value="false"/>
+            <option name="TEST_KOTLIN_OBJECT_DECLARATION" value="false"/>
+            <option name="TEST_KOTLIN_TOPLEVEL" value="false"/>
+        </context>
+    </template>
+    <template name="th" value="// then" description="adds // then" toReformat="true" toShortenFQNames="true">
+        <context>
+            <option name="TEST_KOTLIN" value="true"/>
+            <option name="TEST_KOTLIN_CLASS" value="false"/>
+            <option name="TEST_KOTLIN_OBJECT_DECLARATION" value="false"/>
+            <option name="TEST_KOTLIN_TOPLEVEL" value="false"/>
+        </context>
+    </template>
+    <template name="re" value="// region $regionName$ " description="adds // region" toReformat="true"
+              toShortenFQNames="true">
+        <variable name="regionName" expression="" defaultValue="" alwaysStopAt="true"/>
+        <context>
+            <option name="KOTLIN" value="true"/>
+            <option name="KOTLIN_OBJECT_DECLARATION" value="false"/>
+            <option name="KOTLIN_TOPLEVEL" value="false"/>
+        </context>
+    </template>
+    <template name="end" value="// endregion " description="adds // endregion" toReformat="true"
+              toShortenFQNames="true">
+        <context>
+            <option name="KOTLIN" value="true"/>
+            <option name="KOTLIN_OBJECT_DECLARATION" value="false"/>
+            <option name="KOTLIN_TOPLEVEL" value="false"/>
+        </context>
+    </template>
+</templateSet>
