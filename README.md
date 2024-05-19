@@ -82,6 +82,93 @@ You will see next dialog:
 | 4 | Should generate @Before method                            | Will generate @Before method and mock annotated with @MockK fields |
 | 5 | Should generate @After method                             | Will generate @After method and un-mock everything                 |
 
+## Live Templates - How to Use
+
+Plugin contains some preinstalled Live Templates that will simplify test writing.
+Each of templates is **context aware** and most of them are permitted to be called **mostly** in Test files.
+
+List of supported Live Templates
+<details>
+<summary>fb</summary>
+
+```kotlin
+@Before
+fun before() {
+    MockKAnnotations.init(this)
+}
+```
+
+</details>
+<details>
+<summary>fa</summary>
+
+```kotlin
+@After
+fun after() {
+}
+```
+
+</details>
+
+<details>
+<summary>ft</summary>
+
+```kotlin
+@Test
+fun `test {TEST NAME PLACEHOLDER}`() {
+    // given
+    // when
+    // then
+}
+```
+
+</details>
+
+<details>
+<summary>gi</summary>
+
+```kotlin
+// given
+```
+
+</details>
+
+<details>
+<summary>wh</summary>
+
+```kotlin
+// when
+```
+
+</details>
+
+<details>
+<summary>th</summary>
+
+```kotlin
+// then
+```
+
+</details>
+
+<details>
+<summary>re</summary>
+
+```kotlin
+// region {REGION_DESCRIPTION}
+```
+
+</details>
+
+<details>
+<summary>end</summary>
+
+```kotlin
+// endregion
+```
+
+</details>
+
 ## How To Install
 
 - Download `mockk-test-generator-VERSION.zip` from Releases section
