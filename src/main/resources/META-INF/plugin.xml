@@ -38,6 +38,9 @@
                              implementation="com.vladuken.plugin.mockkgenerator.template.context.KotlinTestTemplateContextType$ObjectDeclaration"/>
 
     </extensions>
+    <extensions defaultExtensionNs="org.jetbrains.kotlin">
+        <supportsKotlinPluginMode supportsK2="true" />
+    </extensions>
     <actions>
         <group
                 id="MockKGeneratorGroup"

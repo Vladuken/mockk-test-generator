@@ -4,7 +4,6 @@ import com.vladuken.plugin.mockkgenerator.model.DomainClassInfo
 import com.vladuken.plugin.mockkgenerator.model.DomainConstructorParameters
 import org.jetbrains.kotlin.idea.base.psi.kotlinFqName
 import org.jetbrains.kotlin.idea.references.mainReference
-import org.jetbrains.kotlin.nj2k.types.typeFqName
 import org.jetbrains.kotlin.psi.KtClass
 import org.jetbrains.kotlin.psi.KtFunctionType
 import org.jetbrains.kotlin.psi.KtTypeReference
@@ -46,7 +45,7 @@ private fun KtClass.parseToDomainConstructorParameters(): List<DomainConstructor
         ?.valueParameters
         ?.map { ktParameter ->
             DomainConstructorParameters(
-                parameterTypeFqn = ktParameter.typeFqName().toString(),
+                parameterTypeFqn = ktParameter.typeReference?.kotlinFqName?.toString().orEmpty(),
                 parameterName = ktParameter.name.toString(),
                 rawTypeString = ktParameter.typeReference?.text.toString(),
                 nestedGenericTypeName = when (val typeElement = ktParameter.typeReference?.typeElement) {

@@ -1,41 +1,24 @@
 plugins {
     id("java")
-    id("org.jetbrains.kotlin.jvm") version "1.9.22"
-    id("org.jetbrains.intellij") version "1.17.2"
+    id("org.jetbrains.kotlin.jvm") version "2.0.21"
+    id("org.jetbrains.intellij.platform") version "2.1.0"
 }
 
 group = "com.vladuken.plugin"
-version = "0.3"
+version = "0.4"
 
 repositories {
     mavenCentral()
 }
 
-// Configure Gradle IntelliJ Plugin
-// Read more: https://plugins.jetbrains.com/docs/intellij/tools-gradle-intellij-plugin.html
-intellij {
-    version.set("2023.2.5")
-    type.set("IC") // Target IDE Platform
-
-    plugins.set(listOf("android", "java", "org.jetbrains.kotlin"))
-}
-
 tasks {
-    // Set the JVM compatibility versions
-    withType<JavaCompile> {
-        sourceCompatibility = "17"
-        targetCompatibility = "17"
-    }
-    withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
-        kotlinOptions.jvmTarget = "17"
-    }
     buildSearchableOptions {
         enabled = false
     }
 
     patchPluginXml {
-        sinceBuild.set("231")
-        untilBuild.set("242.*")
+        sinceBuild.set("242")
+        untilBuild.set("243.*")
     }
 
     signPlugin {
@@ -47,4 +30,24 @@ tasks {
     publishPlugin {
         token.set(System.getenv("PUBLISH_TOKEN"))
     }
+}
+
+repositories {
+    mavenCentral()
+    intellijPlatform {
+        defaultRepositories()
+    }
+}
+
+dependencies {
+    intellijPlatform {
+        intellijIdeaCommunity("2024.2.1")
+        javaCompiler("21")
+        bundledPlugins("com.intellij.java", "org.jetbrains.kotlin")
+
+        pluginVerifier()
+        zipSigner()
+        instrumentationTools()
+    }
+
 }

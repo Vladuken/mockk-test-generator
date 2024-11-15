@@ -64,7 +64,6 @@ private fun DomainClassInfo.toImports(): Set<String> {
     return buildSet {
         add(fqClassName)
         parameters.forEach { parameter ->
-            add(parameter.parameterTypeFqn)
             addAll(parameter.nestedGenericTypesFqn)
         }
     }
