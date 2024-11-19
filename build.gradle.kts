@@ -41,8 +41,10 @@ repositories {
 
 dependencies {
     intellijPlatform {
-        intellijIdeaCommunity("2024.2.1")
+        intellijIdeaCommunity("2024.2.3")
         javaCompiler("21")
+
+        plugin("org.jetbrains.android:242.23339.11")
         bundledPlugins("com.intellij.java", "org.jetbrains.kotlin")
 
         pluginVerifier()
